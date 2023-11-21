@@ -17,6 +17,7 @@ public class Main extends JFrame{
     private JLabel ueberschrift = new JLabel();
     private JLabel ausgabe = new JLabel();
     private JTextField eingabe = new JTextField();
+    private JButton pruefen11 = new JButton();
 
     private boolean z0, z1, z2, z3;
     // end attributes
@@ -59,6 +60,16 @@ public class Main extends JFrame{
         eingabe.setBounds(25, 75, 250, 25);
         eingabe.setText("");
         cp.add(eingabe);
+
+        pruefen11.setBounds(150, 125, 100, 30);
+        pruefen11.setText("Prüfen 11");
+        pruefen11.setMargin(new Insets(2, 2, 2, 2));
+        pruefen11.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                pruefen11_ActionPerformed(evt);
+            }
+        });
+        cp.add(pruefen11);
         // end components
 
         setVisible(true);
@@ -133,6 +144,53 @@ public class Main extends JFrame{
             if (z0) {
                 ausgabe.setText("Akzeptiert");
                 // Prüfen, ob der letzte Zustand z1, z2 oder z3 ist
+            } else {
+                ausgabe.setText("Nicht akzeptiert");
+            }
+        }
+    }
+
+    private void pruefen11_ActionPerformed(ActionEvent evt) {
+        String eingabeString = eingabe.getText();
+
+        if (eingabeString.isEmpty()) {
+            ausgabe.setText("Nicht akzeptiert");
+        } else if (!eingabeString.matches("[01]+")) {
+            ausgabe.setText("Nicht akzeptiert");
+        } else {
+            setZ0();
+
+            String[] eingabeArray = eingabeString.split("");
+
+            for (String s : eingabeArray) {
+                if (z0) {
+                    if (s.equals("0")) {
+                        setZ2();
+                    } else {
+                        setZ1();
+                    }
+                } else if (z1) {
+                    if (s.equals("0")) {
+                        setZ3();
+                    } else {
+                        setZ1();
+                    }
+                } else if (z2) {
+                    if (s.equals("0")) {
+                        setZ2();
+                    } else {
+                        setZ2();
+                    }
+                } else if (z3) {
+                    if (s.equals("0")) {
+                        setZ3();
+                    } else {
+                        setZ1();
+                    }
+                }
+            }
+            if (z1) {
+                ausgabe.setText("Akzeptiert");
             } else {
                 ausgabe.setText("Nicht akzeptiert");
             }
