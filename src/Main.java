@@ -9,7 +9,7 @@ import javax.swing.event.*;
  *
  *
  * @version 1.0 from 19.11.2023
- * @author Celine Janßen
+ * @author Celine J
  */
 public class Main extends JFrame{
     // start attributes
